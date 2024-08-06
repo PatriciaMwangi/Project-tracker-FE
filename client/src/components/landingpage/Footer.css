@@ -1,33 +1,50 @@
 .footer {
-    background-color: #673AB7;
-    padding: 50px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-  }
-  
+  background-color: #673AB7;
+  padding: 2rem 1rem; /* Added responsive padding */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  flex-wrap: wrap; /* Allow wrapping */
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column; /* Stack items vertically on small screens */
+  align-items: center;
+  gap: 1rem;
+  text-align: center; /* Center-align text for small screens */
+}
+
+.footer-content img {
+  max-width: 50px; /* Larger image for better visibility */
+  height: auto;
+}
+
+.footer-content span,
+.footer-content p {
+  font-size: 1rem;
+}
+
+.scroll-up-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: white;
+}
+
+@media (min-width: 600px) {
   .footer-content {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    flex-direction: row; /* Arrange items in a row on medium and larger screens */
+    text-align: left; /* Left-align text */
   }
-  
+
   .footer-content img {
-    max-width: 40px;
-    height: auto;
+    max-width: 30px; /* Adjust image size for larger screens */
   }
-  
-  .footer-content span,
-  .footer-content p {
-    font-size: 16px;
-  }
-  
+
   .scroll-up-button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 20px;
-    color: white;
+    margin-left: auto; /* Push button to the end */
   }
-  
+}
