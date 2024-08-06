@@ -1,19 +1,37 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './components/landingpage/landingpage';
-import Signup from './components/Auth/Register';
-import Login from './components/Auth/Login';
+import { Container } from '@mui/material';
+import SignUpForm from './components/Auth/Register';
+import SignIn from './components/Auth/Login';
+import GoogleAuthButton from './components/Auth/GoogleAuthButton';
 
-function App() {
+const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </BrowserRouter>
+    <Router>
+      <Container maxWidth="sm">
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<SignInPage />} />
+        </Routes>
+      </Container>
+    </Router>
   );
-}
+};
+
+const SignUp = () => (
+  <>
+    <SignUpForm />
+        <GoogleAuthButton />
+  </>
+);
+
+const SignInPage = () => ( 
+  <>
+    <SignIn /> 
+  </>
+);
 
 export default App;
+
