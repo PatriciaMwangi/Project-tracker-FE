@@ -1,0 +1,33 @@
+.footer {
+    background-color: #673AB7;
+    padding: 50px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+  }
+  
+  .footer-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .footer-content img {
+    max-width: 40px;
+    height: auto;
+  }
+  
+  .footer-content span,
+  .footer-content p {
+    font-size: 16px;
+  }
+  
+  .scroll-up-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: white;
+  }
+  
