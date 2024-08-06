@@ -173,7 +173,7 @@ body {
     color: white;
   }
   
-  /* Responsive Design */
+ 
   @media (max-width: 600px) {
     .header-title {
       font-size: 1rem;
