@@ -4,6 +4,7 @@ import HeroSection from './HeroSection';
 import Header from './Header';
 import AboutUs from './AboutUs';
 import Features from './Features';
+import './styles.css';
 
 function LandingPage() {
   return (
