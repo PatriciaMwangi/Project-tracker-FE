@@ -8,7 +8,7 @@ import './styles.css';
 
 function LandingPage() {
   return (
-    <div>
+    <div className='landing-page'>
       <Header />
       <HeroSection />
       <Features/>
