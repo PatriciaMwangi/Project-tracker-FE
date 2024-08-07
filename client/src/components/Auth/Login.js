@@ -1,21 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import {
+  Avatar, Button, CssBaseline, TextField,
+  FormControlLabel, Checkbox, Link, Grid, Box,
+  Typography, Container, createTheme, ThemeProvider
+} from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { useNavigate } from 'react-router-dom';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { setUser } from '../../features/auth/AuthSlice';
 
 const theme = createTheme();
@@ -26,10 +17,29 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    dispatch(setUser({ user: { email }, isAdmin: false }));
-    navigate('/');
+
+    try {
+      const response = await fetch('https://project-tracker-be-bs7w.onrender.com/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        dispatch(setUser({ user: data.user, isAdmin: data.isAdmin }));
+        navigate('/');
+      } else {
+        // Handle errors (e.g., incorrect credentials)
+        console.error('Login failed');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
@@ -94,7 +104,7 @@ const SignIn = () => {
                 </Link>
               </Grid>
               <Grid item>
-              <Link component={RouterLink} to="/signup" variant="body2">
+                <Link component={RouterLink} to="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

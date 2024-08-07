@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProjects } from '../features/projects/projectsSlice';
-import ProjectDetails from './ProjectDetails';
+import { fetchProjects } from '../../features/projects/ProjectsSlice';
 import Navbar from './Navbar';
 
 const Home = () => {
@@ -26,6 +25,7 @@ const Home = () => {
 
   return (
     <div className="home">
+      <Navbar />
       <h1>PROJECTS</h1>
       <div className="search-container">
         <input
@@ -53,10 +53,7 @@ const Home = () => {
             </Link>
           ))}
         </div>
-      )} 
-      <Navbar/>
-      <ProjectDetails />
-
+      )}
     </div>
   );
 };

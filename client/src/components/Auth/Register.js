@@ -31,7 +31,7 @@ const SignUpForm = () => {
     setError('');
 
     try {
-      const response = await fetch(' https://project-tracker-9g9o8mhyv-eugine-emoyo-okedis-projects.vercel.app/signup', {
+      const response = await fetch('https://project-tracker-be-bs7w.onrender.com/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
