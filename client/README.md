@@ -1,70 +1,307 @@
-# Getting Started with Create React App
+# Project Tracking System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The Project Tracking System at Moringa School tracks projects completed by students, providing a project bank for future reference and fostering collaboration and idea exchange among students.
 
-## Available Scripts
 
-In the project directory, you can run:
+## Installation
 
-### `npm start`
+### Prerequisites
+- Python 3.x
+- pip (Python package installer)
+- Node.js
+- npm (Node package manager)
+- PostgreSQL
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Backend Setup
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/your-repo/project-tracking-system.git
+    cd project-tracking-system
+    ```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2. Set up a virtual environment and install dependencies:
+    ```bash
+    python -m venv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
+    ```
 
-### `npm test`
+3. Configure the database in `config.py`.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+4. Run database migrations:
+    ```bash
+    flask db upgrade
+    ```
 
-### `npm run build`
+5. Start the backend server:
+    ```bash
+    flask run
+    ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Frontend Setup
+1. Navigate to the frontend directory:
+    ```bash
+    cd frontend
+    ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. Install dependencies:
+    ```bash
+    npm install
+    ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Start the frontend server:
+    ```bash
+    npm start
+    ```
 
-### `npm run eject`
+## Usage
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Access the Application
+- Backend: `http://localhost:5000`
+- Frontend: `http://localhost:3000`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## API Documentation
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Authentication
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+#### Register
+**POST /api/auth/register**
+- Request Body:
+    ```json
+    {
+      "username": "string",
+      "email": "string",
+      "password": "string"
+    }
+    ```
+- Response:
+    ```json
+    {
+      "message": "User registered successfully"
+    }
+    ```
 
-## Learn More
+#### Login
+**POST /api/auth/login**
+- Request Body:
+    ```json
+    {
+      "email": "string",
+      "password": "string"
+    }
+    ```
+- Response:
+    ```json
+    {
+      "access_token": "string"
+    }
+    ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Projects
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### Get All Projects
+**GET /api/projects**
+- Response:
+    ```json
+    [
+      {
+        "id": "integer",
+        "title": "string",
+        "description": "string",
+        "owner_id": "integer",
+        "created_at": "string",
+        "updated_at": "string"
+      }
+    ]
+    ```
 
-### Code Splitting
+#### Get Project by ID
+**GET /api/projects/{id}**
+- Response:
+    ```json
+    {
+      "id": "integer",
+      "title": "string",
+      "description": "string",
+      "owner_id": "integer",
+      "created_at": "string",
+      "updated_at": "string"
+    }
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+#### Create a Project
+**POST /api/projects**
+- Request Body:
+    ```json
+    {
+      "title": "string",
+      "description": "string",
+      "owner_id": "integer"
+    }
+    ```
+- Response:
+    ```json
+    {
+      "id": "integer",
+      "title": "string",
+      "description": "string",
+      "owner_id": "integer",
+      "created_at": "string",
+      "updated_at": "string"
+    }
+    ```
 
-### Analyzing the Bundle Size
+#### Update a Project
+**PUT /api/projects/{id}**
+- Request Body:
+    ```json
+    {
+      "title": "string",
+      "description": "string"
+    }
+    ```
+- Response:
+    ```json
+    {
+      "id": "integer",
+      "title": "string",
+      "description": "string",
+      "owner_id": "integer",
+      "created_at": "string",
+      "updated_at": "string"
+    }
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+#### Delete a Project
+**DELETE /api/projects/{id}**
+- Response:
+    ```json
+    {
+      "message": "Project deleted successfully"
+    }
+    ```
 
-### Making a Progressive Web App
+### Users
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+#### Get All Users
+**GET /api/users**
+- Response:
+    ```json
+    [
+      {
+        "id": "integer",
+        "username": "string",
+        "email": "string",
+        "created_at": "string",
+        "updated_at": "string"
+      }
+    ]
+    ```
 
-### Advanced Configuration
+#### Get User by ID
+**GET /api/users/{id}**
+- Response:
+    ```json
+    {
+      "id": "integer",
+      "username": "string",
+      "email": "string",
+      "created_at": "string",
+      "updated_at": "string"
+    }
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Admin
 
-### Deployment
+#### Add Cohort
+**POST /api/admin/cohort**
+- Request Body:
+    ```json
+    {
+      "name": "string",
+      "start_date": "string",
+      "end_date": "string"
+    }
+    ```
+- Response:
+    ```json
+    {
+      "id": "integer",
+      "name": "string",
+      "start_date": "string",
+      "end_date": "string"
+    }
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+#### Add or Delete Projects
+**POST /api/admin/projects**
+- Request Body:
+    ```json
+    {
+      "project_id": "integer",
+      "action": "add/delete"
+    }
+    ```
+- Response:
+    ```json
+    {
+      "message": "Project added/deleted successfully"
+    }
+    ```
 
-### `npm run build` fails to minify
+## Data Models
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### User
+```json
+{
+  "id": "integer",
+  "username": "string",
+  "email": "string",
+  "password": "string",
+  "created_at": "string",
+  "updated_at": "string"
+}
+```
+### Project
+```json
+
+{
+  "id": "integer",
+  "title": "string",
+  "description": "string",
+  "owner_id": "integer",
+  "members": ["integer"],
+  "github_link": "string",
+  "created_at": "string",
+  "updated_at": "string"
+}
+```
+## Cohort
+```json
+
+{
+  "id": "integer",
+  "name": "string",
+  "start_date": "string",
+  "end_date": "string"
+}
+```
+## Examples
+Register a New User
+``` bash
+
+curl -X POST http://localhost:5000/api/auth/register -H "Content-Type: application/json" -d '{"username": "john_doe", "email": "john@example.com", "password": "password123"}'
+```
+## Create a New Project
+``` bash
+
+curl -X POST http://localhost:5000/api/projects -H "Content-Type: application/json" -d '{"title": "Project Title", "description": "Project Description", "owner_id": 1}'
+```
+## Contributing
+*Fork the repository.
+*Create a new branch.
+*Make your changes.
+*Submit a pull request.
+
+## License
+This project is licensed under the MIT License.
