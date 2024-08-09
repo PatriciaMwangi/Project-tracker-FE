@@ -18,7 +18,7 @@ const Invited = () =>{
 
 
         console.log(data)
-        fetch('http://127.0.0.1:5600/projects',{
+        fetch('https://project-tracker-be-bs7w.onrender.com',{
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
