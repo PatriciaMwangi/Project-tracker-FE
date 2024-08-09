@@ -53,14 +53,14 @@ const ProjectDetails = () => {
     <div className="project-details">
       <h2>{project.name}</h2>
       <p><strong>Description:</strong> {project.description}</p>
-      <p><strong>GitHub Link:</strong> <a href={project.github_link} target="_blank" rel="noopener noreferrer">{project.github_link}</a></p>
+      <p><strong>GitHub Link:</strong> <a href={project.github_url} target="_blank" rel="noopener noreferrer">{project.github_url}</a></p>
 
       <h3>Edit Project</h3>
       <ProjectForm initialData={project} onSubmit={handleUpdate} buttonText="Update" />
       <button type="button" onClick={handleDelete}>Delete</button>
 
       <h3>Create New Project</h3>
-      <ProjectForm initialData={{ name: '', description: '', github_link: '' }} onSubmit={handleUpdate} buttonText="Create" />
+      <ProjectForm initialData={{ name: '', description: '', github_Url: '' }} onSubmit={handleUpdate} buttonText="Create" />
     </div>
   );
 };

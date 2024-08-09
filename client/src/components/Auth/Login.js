@@ -21,26 +21,34 @@ const SignIn = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch('https://project-tracker-be-bs7w.onrender.com/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
+        const response = await fetch('https://project-tracker-be-bs7w.onrender.com/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+        });
 
-      if (response.ok) {
-        const data = await response.json();
-        dispatch(setUser({ user: data.user, isAdmin: data.isAdmin }));
-        navigate('/');
-      } else {
-        // Handle errors (e.g., incorrect credentials)
-        console.error('Login failed');
-      }
+        if (response.ok) {
+            const data = await response.json();
+
+            // Dispatch the user data to Redux store
+            dispatch(setUser({ user: data.user, isAdmin: data.isAdmin }));
+
+            // Navigate based on the user's role
+            if (data.isAdmin) {
+                navigate('/admin-dashboard');
+            } else {
+                navigate('/home');
+            }
+        } else {
+            // Handle errors (e.g., incorrect credentials)
+            console.error('Login failed');
+        }
     } catch (error) {
-      console.error('Error:', error);
+        console.error('Error:', error);
     }
-  };
+};
 
   return (
     <ThemeProvider theme={theme}>

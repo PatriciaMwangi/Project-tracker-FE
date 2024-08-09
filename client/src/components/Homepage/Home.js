@@ -3,10 +3,14 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProjects } from '../../features/projects/ProjectsSlice';
 import Navbar from './Navbar';
+import './Home.css'; // Assuming you have a CSS file for styling
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { projects, status, error } = useSelector((state) => state.projects);
+  const projectsState = useSelector((state) => state.projects);
+
+  const { projects = [], status = 'idle', error = null } = projectsState || {};
+
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
@@ -34,11 +38,12 @@ const Home = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="search-input"
+          aria-label="Search projects"
         />
       </div>
-      {status === 'loading' && <p>Loading projects...</p>}
+      {status === 'loading' && <div className="spinner">Loading projects...</div>}
       {status === 'failed' && (
-        <div>
+        <div className="error-message">
           <p>Error: {error}</p>
           <p>Details: {JSON.stringify(error)}</p>
         </div>
