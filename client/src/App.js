@@ -9,6 +9,7 @@ import AdminDashboard from './components/Admin/AdminDashboard';
 import Home from './components/Homepage/Home';
 import ProjectForm from './components/Homepage/ProjectForm';
 import ProjectDetails from './components/Homepage/ProjectDetails';
+import Invited from './components/Homepage/EmailInvaitation';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
       <Container maxWidth="lg">
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 2 }}>
           <Routes>
+            <Route path='/email_invitation' element={<Invited/>}/>
             <Route path="/" element={<LandingPage />} />
             <Route path="/home" element={<Home />} />
             <Route path="/signup" element={<SignUp />} />

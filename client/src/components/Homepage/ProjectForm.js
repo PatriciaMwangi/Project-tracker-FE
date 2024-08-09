@@ -30,7 +30,7 @@ const ProjectForm = () => {
 
       const data = await response.json();
       dispatch(addProject(data));
-      navigate('/');
+      navigate('/email_invitation');
     } catch (error) {
       setError(error.message);
     }
@@ -61,7 +61,7 @@ const ProjectForm = () => {
           onChange={(e) => setGithubUrl(e.target.value)} 
           required 
         />
-        <button type="submit">Add Project</button>
+        <button type="submit">Add Members</button>
       </form>
     </div>
   );
