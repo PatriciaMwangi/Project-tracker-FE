@@ -9,10 +9,10 @@ const Navbar = () => {
       <Link to="/" className="logo">PROJECTS</Link>
       <div className="nav-links">
         {location.pathname !== '/' && (
-          <Link to="/" className="nav-button">HOME</Link>
+          <Link to="/home" className="nav-button">HOME</Link>
         )}
         {location.pathname !== '/add-project' && (
-          <Link to="/add-project" className="nav-button">ADD PROJECT</Link>
+          <Link to="/projects/new" className="nav-button">ADD PROJECT</Link>
         )}
       </div>
     </nav>

@@ -9,6 +9,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import axios from 'axios';
 
 const theme = createTheme();
 
@@ -23,47 +24,45 @@ const SignUpForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!username || !email || !password) {
-      setError('Username, Email, and Password must be provided');
-      return;
+        setError('Username, Email, and Password must be provided');
+        return;
     }
-    
+
     setError('');
 
     try {
-      const response = await fetch('https://project-tracker-be-bs7w.onrender.com/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username,
-          email,
-          password,
-          isAdmin,
-        }),
-      });
+        const response = await axios.post('https://project-tracker-be-bs7w.onrender.com/register', {
+            username,
+            email,
+            password,
+            is_admin: isAdmin,  // Ensure this key matches the backend
+        });
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+        const data = response.data;
+        const { user, accessToken } = data;
 
-      const data = await response.json();
-      // Assuming the response contains the access token
-      const { user, accessToken } = data;
-      
-      // Save access token to local storage
-      localStorage.setItem('accessToken', accessToken);
-      
-      // Dispatch the user data to Redux store
-      dispatch(setUser(user));
-      
-      // Navigate to the dashboard
-      navigate('/dashboard');
+        // Save access token to local storage
+        localStorage.setItem('accessToken', accessToken);
+
+        // Dispatch the user data to Redux store
+        dispatch(setUser({ user, isAdmin: user.is_admin }));
+
+        // Navigate based on the user's role
+        if (user.is_admin) {
+            navigate('/admin-dashboard');
+        } else {
+            navigate('/home');
+        }
     } catch (error) {
-      setError('Sign up failed. Please try again.');
+        if (error.response && error.response.data) {
+            setError(`Error: ${error.response.data.msg}`);
+        } else {
+            setError('Sign up failed. Please try again.');
+        }
     }
-  };
+};
 
   return (
     <ThemeProvider theme={theme}>
