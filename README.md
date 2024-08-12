@@ -23,7 +23,7 @@ The Project Tracking System at Moringa School tracks projects completed by stude
     ```bash
     python -m venv venv
     source venv/bin/activate
-    pip install -r requirements.txt
+    pip install - r requirements.txt
     ```
 
 3. Configure the database in `config.py`.
