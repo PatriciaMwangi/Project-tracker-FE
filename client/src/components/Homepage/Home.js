@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProjects } from '../../features/projects/ProjectsSlice';
 import Navbar from './Navbar';
-import './Home.css'; // Assuming you have a CSS file for styling
+import './Home.css'; 
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -19,13 +19,16 @@ const Home = () => {
     }
   }, [status, dispatch]);
 
+ 
   useEffect(() => {
     console.log('Current state:', { projects, status, error });
   }, [projects, status, error]);
 
-  const filteredProjects = projects.filter((project) =>
-    project.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredProjects = Array.isArray(projects)
+  ? projects.filter((project) =>
+      project && project.name && project.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  : [];
 
   return (
     <div className="home">
@@ -53,7 +56,6 @@ const Home = () => {
         <div className="projects-grid">
           {filteredProjects.map((project) => (
             <Link to={`/project/${project.id}`} key={project.id} className="project-card">
-              <img src={`https://source.unsplash.com/random/300x200?sig=${project.id}`} alt={project.name} />
               <h3>{project.name}</h3>
             </Link>
           ))}

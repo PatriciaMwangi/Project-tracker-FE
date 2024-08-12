@@ -9,6 +9,9 @@ import AdminDashboard from './components/Admin/AdminDashboard';
 import Home from './components/Homepage/Home';
 import ProjectForm from './components/Homepage/ProjectForm';
 import ProjectDetails from './components/Homepage/ProjectDetails';
+import ProjectFormUpdate from './components/Homepage/UpdateProjectForm';
+import Invited from './components/Homepage/EmailInvites';
+
 
 const App = () => {
   return (
@@ -16,13 +19,15 @@ const App = () => {
       <Container maxWidth="lg">
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 2 }}>
           <Routes>
+            <Route path='/invite-me' element={<Invited/>}/>
+            <Route path="/project/update/:id" element={<ProjectFormUpdate/>}/>
             <Route path="/" element={<LandingPage />} />
             <Route path="/home" element={<Home />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/signin" element={<SignInPage />} />
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/projects/new" element={<ProjectForm />} />
-            <Route path="/projects/:id" element={<ProjectDetails />} />
+            <Route path="/project/:id" element={<ProjectDetails />} />
           </Routes>
         </Box>
       </Container>

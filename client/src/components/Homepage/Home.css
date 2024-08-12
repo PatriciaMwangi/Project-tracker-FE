@@ -1,4 +1,12 @@
 /* App.css */
+
+
+.project-form {
+  background-color:  #e9ecef23; /* Form container background color */
+  padding: 20px; /* Padding inside the form container */
+  border-radius: 8px; /* Optional: Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Shadow effect */
+}
 body {
     font-family: Arial, sans-serif;
     margin: 0;

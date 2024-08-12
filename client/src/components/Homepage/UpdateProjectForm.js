@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { addProject } from '../../features/projects/ProjectsSlice';
-import { useNavigate } from 'react-router-dom';
-import Navbar from './Navbar';
+import { updateProject } from '../../features/projects/ProjectsSlice';
+import { useNavigate, useParams } from 'react-router-dom';
+import './Home.css';
 
-
-const ProjectForm = () => {
+const ProjectFormUpdate = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [githubUrl, setGithubUrl] = useState('');
@@ -13,32 +12,39 @@ const ProjectForm = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { id } = useParams();
 
-
+  useEffect(() => {
+    // Fetch the project data and populate the form fields when component mounts
+    fetch(`https://project-tracker-be-bs7w.onrender.com/projects/${id}`)
+      .then(response => response.json())
+      .then(data => {
+        setName(data.name);
+        setDescription(data.description);
+        setGithubUrl(data.github_url);
+      })
+      .catch(error => setError(error.message));
+  }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    const newProject = { name, description, github_url: githubUrl };
-console.log(newProject,'newProject')
+    const updatedProject = { name, description, github_url: githubUrl };
+
     try {
-      await dispatch(addProject(newProject)).unwrap();
-      console.log(newProject,'added')
-      navigate('/invite-me');
+      await dispatch(updateProject({ id, updatedProject })).unwrap();
+      navigate('/home');
     } catch (error) {
-      setError(error.message || 'Failed to add project');
+      setError(error.message || 'Failed to update project');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <>
-    <Navbar/>
-     <div className="project-form">
-      
-      <h2>New Project</h2>
+    <div className="project-form" style={{ backgroundColor: '#8c8e91' }}>
+      <h2>Edit Project Details</h2>
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">Project Name</label>
@@ -65,15 +71,11 @@ console.log(newProject,'newProject')
           required 
         />
         <button type="submit" disabled={loading}>
-          {loading ? 'Adding...' : 'Invite Members'}
-          
+          {loading ? 'Updating...' : 'Update Project'}
         </button>
       </form>
     </div>
-    
-    </>
-   
   );
 };
 
-export default ProjectForm;
+export default ProjectFormUpdate;
