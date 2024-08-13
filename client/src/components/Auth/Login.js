@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import {
-  Avatar, Button, CssBaseline, TextField,
-  FormControlLabel, Checkbox, Link, Grid, Box,
-  Typography, Container, createTheme, ThemeProvider
-} from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { useNavigate, Link } from 'react-router-dom';
+import { FaHome, FaLock } from 'react-icons/fa';
 import { setUser } from '../../features/auth/AuthSlice';
-
-const theme = createTheme();
+import GoogleAuthButton from './GoogleAuthButton'; // Import GoogleAuthButton
+import './Auth.css';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -42,85 +37,61 @@ const SignIn = () => {
                 navigate('/home');
             }
         } else {
-            // Handle errors (e.g., incorrect credentials)
             console.error('Login failed');
         }
     } catch (error) {
         console.error('Error:', error);
     }
-};
+  };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
+    <div className="auth-container">
+      <button className="home-icon" onClick={() => navigate('/')}>
+        <FaHome />
+      </button>
+      <div className="auth-box">
+        <div className="auth-image" />
+        <div className="auth-form">
+          <div className="avatar">
+            <FaLock />
+          </div>
+          <h1>Sign In</h1>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="email"
               id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
+              placeholder="Email Address"
+              required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
+            <input
               type="password"
               id="password"
-              autoComplete="current-password"
+              placeholder="Password"
+              required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link component={RouterLink} to="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-      </Container>
-    </ThemeProvider>
+            <label>
+              <input
+                type="checkbox"
+                value="remember"
+              />
+              Remember me
+            </label>
+            <button type="submit">Sign In</button>
+            <div className="links">
+              <Link to="#">Forgot password?</Link>
+              <Link to="/signup">Don't have an account? Sign Up</Link>
+            </div>
+            <div className="google-auth-container">
+              <GoogleAuthButton /> {/* Add GoogleAuthButton here */}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 
