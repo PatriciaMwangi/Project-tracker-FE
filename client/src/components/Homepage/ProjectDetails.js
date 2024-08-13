@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ProjectForm from './ProjectForm';
+import Navbar from './Navbar';
 
 const ProjectDetails = () => {
   const { id } = useParams();
@@ -46,22 +47,39 @@ const ProjectDetails = () => {
       .catch(error => setError(error.message));
   };
 
-  if (error) return <div>Error: {error}</div>;
+  if (error) return <div className="text-red-500">{error}</div>;
   if (!project) return <div>Loading...</div>;
 
   return (
-    <div className="project-details">
-      <h2>{project.name}</h2>
-      <p><strong>Description:</strong> {project.description}</p>
-      <p><strong>GitHub Link:</strong> <a href={project.github_url} target="_blank" rel="noopener noreferrer">{project.github_url}</a></p>
+    <>
+      <Navbar />
+      <div className="project-details bg-white p-8 rounded-lg shadow-lg text-purple-600 max-w-4xl mx-auto">
+        <h2 className="text-3xl font-bold mb-4">{project.name}</h2>
+        <p className="mb-4"><strong>Description:</strong> {project.description}</p>
+        <p className="mb-4">
+          <strong>GitHub Link:</strong> 
+          <a 
+            href={project.github_url} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-purple-500 underline"
+          >
+            {project.github_url}
+          </a>
+        </p>
 
-      <h3>Edit Project</h3>
-      <ProjectForm initialData={project} onSubmit={handleUpdate} buttonText="Update" />
-      <button type="button" onClick={handleDelete}>Delete</button>
-
-      <h3>Create New Project</h3>
-      <ProjectForm initialData={{ name: '', description: '', github_Url: '' }} onSubmit={handleUpdate} buttonText="Create" />
-    </div>
+        <h3 className="text-2xl font-semibold mt-8 mb-4">Edit Project</h3>
+        <ProjectForm initialData={project} onSubmit={handleUpdate} buttonText="Update" />
+        
+        <button 
+          type="button" 
+          onClick={handleDelete}
+          className="mt-4 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+        >
+          Delete
+        </button>
+      </div>
+    </>
   );
 };
 
