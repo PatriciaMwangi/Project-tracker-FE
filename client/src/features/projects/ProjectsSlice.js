@@ -11,7 +11,7 @@ export const fetchProjects = createAsyncThunk('projects/fetchProjects', async ()
 
 // Add a new project
 export const addProject = createAsyncThunk('projects/addProject', async (project) => {
-  const response = await fetch('https://project-tracker-be-bs7w.onrender.com/projects', {
+  const response = await fetch('http://127.0.0.1:5000/projects', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

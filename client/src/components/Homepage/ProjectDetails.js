@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import ProjectForm from './ProjectForm';
+import Navbar from './Navbar';
 
 const ProjectDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [project, setProject] = useState(null);
   const [error, setError] = useState(null);
+
+  const handleRedirect = () => {
+    if (project) {
+      navigate(`/project/update/${project.id}`);
+    }
+  };
+
 
   useEffect(() => {
     fetch(`https://project-tracker-be-bs7w.onrender.com/projects/${id}`)
@@ -20,24 +27,6 @@ const ProjectDetails = () => {
       .catch(error => setError(error.message));
   }, [id]);
 
-  const handleUpdate = (updatedProject) => {
-    fetch(`https://project-tracker-be-bs7w.onrender.com/projects/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(updatedProject)
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => setProject(data))
-      .catch(error => setError(error.message));
-  };
-
   const handleDelete = () => {
     fetch(`https://project-tracker-be-bs7w.onrender.com/projects/${id}`, {
       method: 'DELETE'
@@ -46,22 +35,47 @@ const ProjectDetails = () => {
       .catch(error => setError(error.message));
   };
 
-  if (error) return <div>Error: {error}</div>;
+  if (error) return <div className="text-red-500">{error}</div>;
   if (!project) return <div>Loading...</div>;
 
   return (
-    <div className="project-details">
-      <h2>{project.name}</h2>
-      <p><strong>Description:</strong> {project.description}</p>
-      <p><strong>GitHub Link:</strong> <a href={project.github_url} target="_blank" rel="noopener noreferrer">{project.github_url}</a></p>
-
-      <h3>Edit Project</h3>
-      <ProjectForm initialData={project} onSubmit={handleUpdate} buttonText="Update" />
-      <button type="button" onClick={handleDelete}>Delete</button>
-
-      <h3>Create New Project</h3>
-      <ProjectForm initialData={{ name: '', description: '', github_Url: '' }} onSubmit={handleUpdate} buttonText="Create" />
-    </div>
+    <>
+      <Navbar />
+      <div className="project-details bg-white p-8 rounded-lg shadow-lg text-purple-600 max-w-4xl mx-auto">
+        <h2 className="text-3xl font-bold mb-4">{project.name}</h2>
+        <p className="mb-4"><strong>Description:</strong> {project.description}</p>
+        <p className="mb-4">
+          <strong>GitHub Link:</strong> 
+          <a 
+            href={project.github_url} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-purple-500 underline"
+          >
+            {project.github_url}
+          </a>
+        </p>
+        <button 
+          type="button" 
+          onClick={handleRedirect}
+          style={{
+            marginTop: '1rem',
+            padding: '0.5rem 1rem',
+            backgroundColor: '#6d28d9', // Purple background
+            color: 'white', // White text
+            borderRadius: '0.375rem', // Rounded corners
+            border: 'none',
+            cursor: 'pointer',
+            transition: 'background-color 0.3s',
+          }}
+          onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#5b21b6'} // Darker purple on hover
+          onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#6d28d9'} // Reset to original purple
+        
+        >
+          Edit Project
+        </button>
+      </div>
+    </>
   );
 };
 

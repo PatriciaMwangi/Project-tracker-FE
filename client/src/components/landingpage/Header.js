@@ -12,7 +12,7 @@ function Header() {
         Sign Up
         </Link>
         <Link component = {RouterLink} to="/signin" className="button">
-        sign In
+        Sign In
         </Link>
       </div>
     </header>
