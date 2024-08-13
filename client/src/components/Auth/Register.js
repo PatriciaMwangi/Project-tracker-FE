@@ -1,17 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { TextField, Button, Checkbox, FormControlLabel, Box, Alert } from '@mui/material';
+import { useNavigate, Link } from 'react-router-dom';
+import { FaHome, FaLock } from 'react-icons/fa';
 import { setUser } from '../../features/auth/AuthSlice';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Avatar from '@mui/material/Avatar';
-import CssBaseline from '@mui/material/CssBaseline';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import axios from 'axios';
-
-const theme = createTheme();
+import GoogleAuthButton from './GoogleAuthButton'; // Import GoogleAuthButton
+import './Auth.css';
 
 const SignUpForm = () => {
   const [username, setUsername] = useState('');
@@ -26,21 +19,23 @@ const SignUpForm = () => {
     e.preventDefault();
 
     if (!username || !email || !password) {
-        setError('Username, Email, and Password must be provided');
-        return;
+      setError('Username, Email, and Password must be provided');
+      return;
     }
 
     setError('');
 
     try {
-        const response = await axios.post('https://project-tracker-be-bs7w.onrender.com/register', {
-            username,
-            email,
-            password,
-            is_admin: isAdmin,  // Ensure this key matches the backend
-        });
+      const response = await fetch('https://project-tracker-be-bs7w.onrender.com/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, email, password, is_admin: isAdmin }),
+      });
 
-        const data = response.data;
+      if (response.ok) {
+        const data = await response.json();
         const { user, accessToken } = data;
 
         // Save access token to local storage
@@ -51,99 +46,76 @@ const SignUpForm = () => {
 
         // Navigate based on the user's role
         if (user.is_admin) {
-            navigate('/admin-dashboard');
+          navigate('/admin-dashboard');
         } else {
-            navigate('/home');
+          navigate('/home');
         }
+      } else {
+        const errorData = await response.json();
+        setError(`Error: ${errorData.msg}`);
+      }
     } catch (error) {
-        if (error.response && error.response.data) {
-            setError(`Error: ${error.response.data.msg}`);
-        } else {
-            setError('Sign up failed. Please try again.');
-        }
+      setError('Sign up failed. Please try again.');
     }
-};
+  };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign Up
-          </Typography>
-          {error && (
-            <Alert severity="error" sx={{ width: '100%', mt: 2 }}>
-              {error}
-            </Alert>
-          )}
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
+    <div className="auth-container">
+      <button className="home-icon" onClick={() => navigate('/')}>
+        <FaHome />
+      </button>
+      <div className="auth-box">
+        <div className="auth-image" />
+        <div className="auth-form">
+          <div className="avatar">
+            <FaLock />
+          </div>
+          <h1>Sign Up</h1>
+          {error && <div className="error">{error}</div>}
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
               id="username"
-              label="Username"
-              name="username"
-              autoComplete="username"
-              autoFocus
+              placeholder="Username"
+              required
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
+            <input
+              type="email"
               id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              placeholder="Email Address"
+              required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
+            <input
               type="password"
               id="password"
-              autoComplete="current-password"
+              placeholder="Password"
+              required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={isAdmin}
-                  onChange={(e) => setIsAdmin(e.target.checked)}
-                />
-              }
-              label="Admin"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
-            </Button>
-          </Box>
-        </Box>
-      </Container>
-    </ThemeProvider>
+            <label>
+              <input
+                type="checkbox"
+                checked={isAdmin}
+                onChange={(e) => setIsAdmin(e.target.checked)}
+              />
+              Admin
+            </label>
+            <button type="submit">Sign Up</button>
+            <div className="links">
+              <Link to="/signin">Already have an account? Sign In</Link>
+            </div>
+            <div className="google-auth-container">
+              <GoogleAuthButton /> {/* Add GoogleAuthButton here */}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 

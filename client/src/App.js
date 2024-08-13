@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Container, Box } from '@mui/material';
 import LandingPage from './components/landingpage/landingpage';
 import SignUpForm from './components/Auth/Register';
 import SignIn from './components/Auth/Login';
@@ -13,8 +12,10 @@ import ProjectDetails from './components/Homepage/ProjectDetails';
 const App = () => {
   return (
     <Router>
-      <Container maxWidth="lg">
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 2 }}>
+      {/* Replace Container with a div and add your custom styles */}
+      <div style={{ maxWidth: '1140px', margin: '0 auto', padding: '0 15px' }}>
+        {/* Replace Box with a div and add your custom styles */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px' }}>
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/home" element={<Home />} />
@@ -24,8 +25,8 @@ const App = () => {
             <Route path="/projects/new" element={<ProjectForm />} />
             <Route path="/projects/:id" element={<ProjectDetails />} />
           </Routes>
-        </Box>
-      </Container>
+        </div>
+      </div>
     </Router>
   );
 };

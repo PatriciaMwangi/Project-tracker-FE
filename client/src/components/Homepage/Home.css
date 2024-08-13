@@ -1,4 +1,18 @@
 /* General styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.home {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+}
+
+.navbar {
+  width: 100% !important;
+}
 body.light-theme {
   background-color: #f4f4f9;
   color: #333;
@@ -10,7 +24,8 @@ body.light-theme {
   min-height: 100vh;
   padding: 4rem 2rem;
   color: white;
-  width: 100vw;
+  width: 100%; /* Use 100% instead of 100vw for full width */
+  margin: 0; 
 }
 
 .light-theme .home {
