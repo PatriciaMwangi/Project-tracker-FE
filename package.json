@@ -2,6 +2,9 @@
   "name": "Project-tracker-FE",
   "version": "0.1.0",
   "description": "A project tracker frontend application",
+  "author": "Patricia",
+  "license": "Moringa",
+  "description": "A project tracker frontend application",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
