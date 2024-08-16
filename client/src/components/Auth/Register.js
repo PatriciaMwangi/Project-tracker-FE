@@ -3,8 +3,11 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { FaHome, FaLock } from 'react-icons/fa';
 import { setUser } from '../../features/auth/AuthSlice';
-import GoogleAuthButton from './GoogleAuthButton'; // Import GoogleAuthButton
+import GoogleAuthButton from './GoogleAuthButton';
+import { auth, googleProvider, signInWithPopup, GoogleAuthProvider } from '../../FirebaseConfig';
 import './Auth.css';
+
+const API_URL = 'https://project-tracker-be-bs7w.onrender.com';
 
 const SignUpForm = () => {
   const [username, setUsername] = useState('');
@@ -26,7 +29,7 @@ const SignUpForm = () => {
     setError('');
 
     try {
-      const response = await fetch('https://project-tracker-be-bs7w.onrender.com/register', {
+      const response = await fetch(`${API_URL}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -38,13 +41,10 @@ const SignUpForm = () => {
         const data = await response.json();
         const { user, accessToken } = data;
 
-        // Save access token to local storage
         localStorage.setItem('accessToken', accessToken);
 
-        // Dispatch the user data to Redux store
         dispatch(setUser({ user, isAdmin: user.is_admin }));
 
-        // Navigate based on the user's role
         if (user.is_admin) {
           navigate('/admin-dashboard');
         } else {
@@ -59,6 +59,68 @@ const SignUpForm = () => {
     }
   };
 
+  const LoginWithGoogle = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      const user = result.user;
+  
+      const email = user.email || (user.providerData.length > 0 && user.providerData[0].email);
+      if (!email) {
+        setError("Google sign-in failed: No email associated with the account");
+        return;
+      }
+  
+      const response = await fetch(`${API_URL}/userByEmail`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ email }),
+      });
+  
+      let data;
+  
+      if (response.ok) {
+        data = await response.json();
+      } else if (response.status === 404) {
+        // Attempt to register the user if not found
+        const registerResponse = await fetch(`${API_URL}/register`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            username: user.displayName,
+            email,
+            is_admin: false,
+          }),
+        });
+  
+        if (!registerResponse.ok) {
+          const errorData = await registerResponse.json();
+          setError(`Error: ${errorData.message}`);
+          return;
+        }
+  
+        data = await registerResponse.json();
+      } else {
+        setError('Failed to fetch user or register.');
+        return;
+      }
+  
+      localStorage.setItem('accessToken', data.accessToken);
+      dispatch(setUser(data.user));
+      navigate('/home');
+      
+    } catch (error) {
+      console.error('Google sign-in failed:', error);
+      setError(`Google sign-in failed: ${error.message}`);
+    }
+  };
   return (
     <div className="auth-container">
       <button className="home-icon" onClick={() => navigate('/')}>
@@ -110,7 +172,7 @@ const SignUpForm = () => {
               <Link to="/signin">Already have an account? Sign In</Link>
             </div>
             <div className="google-auth-container">
-              <GoogleAuthButton /> {/* Add GoogleAuthButton here */}
+              <GoogleAuthButton onClick={LoginWithGoogle} />
             </div>
           </form>
         </div>

@@ -6,7 +6,7 @@ export const loginWithGoogle = () => async (dispatch) => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
     const user = result.user;
-    dispatch(setUser({ user, isAdmin: false }));
+    dispatch(setUser({ user,  isAdmin: false }));
     console.log(user);
   } catch (error) {
     console.error(error);
