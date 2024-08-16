@@ -9,6 +9,7 @@ const GoogleAuthButton = () => {
 
   const handleGoogleLogin = () => {
     dispatch(loginWithGoogle());
+    console.log(loginWithGoogle)
   };
 
   return (
