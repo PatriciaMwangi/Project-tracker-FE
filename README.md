@@ -58,7 +58,7 @@ The Project Tracking System at Moringa School tracks projects completed by stude
 
 ### Access the Application
 - Backend: `http://localhost:5000`
-- Frontend: `http://localhost:3000`
+- Frontend: `https://project-tracker-ejkp1pdgk-patricia-mwangis-projects.vercel.app/`
 
 ## API Documentation
 
