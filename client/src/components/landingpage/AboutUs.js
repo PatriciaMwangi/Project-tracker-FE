@@ -15,13 +15,15 @@ const AboutUs = () => {
                     </div>
                     <div className="col-md-4 text-center">
                         <p className="aboutus-description">
-                            Tracking progress is crucial for Moringa School students to measure growth in their technical abilities. As students complete intensive coding projects during the program, a centralized system to store details about each project would create transparency around learning.
+                        Welcome to the Project Tracker
+Our platform is designed to empower students, instructors, and administrators by providing a centralized system to track, manage, and showcase the progress of coding projects completed throughout the program.
                         </p>
-                        <h2 className="aboutus-title">We built this project tracker to empower Moringa students</h2>
+                        <h2 className="aboutus-title">Our Mission </h2>
                         <p className="aboutus-description">
-                            With dedicated pages for each student project submission, this web app allows batches to upload links, descriptions, and notes to remember their work after graduation.
+                      
+                        We believe that hands-on projects are at the core of a student’s learning journey. However, keeping track of these projects over time can be challenging, especially when it comes to revisiting past work for reference, showcasing skills to potential employers, or collaborating with peers. Our mission is to make this process seamless by offering a user-friendly platform that ensures every project, from inception to completion, is well-documented, easily accessible, and presented professionally.
                         </p>
-                        <button className="btn btn-primary">Upload projects</button>
+                        
                     </div>
                     <div className="col-md-4">
                         <img 

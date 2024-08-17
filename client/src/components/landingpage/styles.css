@@ -1,4 +1,26 @@
 /* Global styles */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', sans-serif;
+}
+ 
+.hero-heading {
+  font-weight: 700; /* Bold */
+}
+
+.hero-subheading {
+  font-weight: 400; /* Normal */
+}
+
+
 .hero {
   background-size: cover;
   background-position: center;
