@@ -14,6 +14,8 @@ import CohortManagement from './components/Admin/CohortManagement';
 import Footer from './components/Admin/Footer';
 import NavBar from './components/Admin/NavBar';
 import Projects from './components/Admin/Projects';
+import ForgotPassword from './components/forgotPassword/ForgotPassword';
+import ResetPassword from './components/forgotPassword/ResetPassword';
 import ProtectedRoute from './components/protectedRoute/ProtectedRoute';
 
 // Admin Layout Component
@@ -43,7 +45,21 @@ const App = () => {
      <Router>
       <Routes>
             {/* Public Routes */}
-            <Route path='/invite-me' element={<Invited/>}/>
+            <Route path="/reset-password/:token" element={
+              <PublicLayout>
+                <ResetPassword />
+              </PublicLayout>
+              } />
+            <Route path="/forgot-password" element={
+              <PublicLayout>
+                <ForgotPassword />
+              </PublicLayout>
+              } />
+            <Route path='/invite-me' element={
+              <PublicLayout>
+                <Invited/>
+              </PublicLayout>
+              }/>
             <Route path="/project/update/:id" element={
               <PublicLayout>
                 <ProjectFormUpdate/>

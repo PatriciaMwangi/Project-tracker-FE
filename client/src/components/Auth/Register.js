@@ -7,7 +7,7 @@ import GoogleAuthButton from './GoogleAuthButton';
 import { auth, googleProvider, signInWithPopup, GoogleAuthProvider } from '../../FirebaseConfig';
 import './Auth.css';
 
-const API_URL = 'https://project-tracker-be-bs7w.onrender.com';
+const API_URL = 'https://project-tracker-be-jwpt.onrender.com';
 
 const SignUpForm = () => {
   const [username, setUsername] = useState('');

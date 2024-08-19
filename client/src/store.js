@@ -4,6 +4,8 @@ import authReducer from './features/auth/AuthSlice';
 import projectsReducer from './features/projects/ProjectsSlice';
 import cohortsReducer from './features/cohorts/CohortsSlice';
 import userReducer from './features/user/UserSlice';
+import forgotPasswordReducer from './features/forgotPasswords/ForgotPasswordSlice';
+import resetPasswordReducer from './features/forgotPasswords/ResetPasswordSlice';
 
 const store = configureStore({
   reducer: {
@@ -11,6 +13,8 @@ const store = configureStore({
     projects: projectsReducer,
     cohorts: cohortsReducer,
     user: userReducer,
+    forgotPassword: forgotPasswordReducer,
+    resetPassword: resetPasswordReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
