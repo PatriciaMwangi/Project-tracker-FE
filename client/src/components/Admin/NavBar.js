@@ -6,7 +6,7 @@ const NavBar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-success">
       <div className="container-fluid">
-      <NavLink className="navbar-brand" to="/">Admin Dashboard</NavLink>
+      <NavLink className="navbar-brand" to="/admin-dashboard">Admin Dashboard</NavLink>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
