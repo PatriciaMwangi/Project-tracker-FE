@@ -1,4 +1,3 @@
-// src/components/Dashboard.js
 import React from 'react';
 import { useSelector } from 'react-redux';
 import BarChart from './charts/BarChart';
@@ -8,7 +7,10 @@ import DashboardSummary from './DashboardSummary';
 
 const Dashboard = () => {
   const cohortCount = useSelector(state => state.cohorts?.count || 0);
-  const projectCount = useSelector(state => state.projects?.count || 0);
+  
+  // Dynamically calculate projectCount based on the length of the projects array
+  const projects = useSelector(state => state.projects?.projects || []);
+  const projectCount = projects.length;  // Calculate the number of projects
 
   return (
     <div className="container mt-4">
