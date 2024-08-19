@@ -53,9 +53,7 @@ const Home = () => {
         </button>
       </div>
       <div className="cohort-label text-center py-4">
-        <p className="text-lg font-semibold">
-          {user && user.cohort ? `Cohort: ${user.cohort}` : 'No cohort information available'}
-        </p>
+      
       </div>
       <h1 className="text-3xl font-bold text-center mb-8">PROJECT TRACKER</h1>
       <div className="search-container flex justify-center mb-8">
