@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCohorts, addCohort, setLoading, setError } from '../../features/cohorts/CohortsSlice';
+import { fetchCohorts, addNewCohort } from '../../features/cohorts/CohortsSlice';
 
 const CohortManagement = () => {
   const [cohort, setCohort] = useState('');
@@ -10,27 +10,13 @@ const CohortManagement = () => {
   const error = useSelector((state) => state.cohorts.error);
 
   useEffect(() => {
-    const fetchCohorts = async () => {
-      dispatch(setLoading(true));
-      try {
-        const response = await fetch('https://api.example.com/cohorts');
-        if (!response.ok) {
-          throw new Error('Failed to fetch cohorts');
-        }
-        const data = await response.json();
-        dispatch(setCohorts(data));
-      } catch (err) {
-        dispatch(setError(err.message));
-      }
-    };
-
-    fetchCohorts();
+    dispatch(fetchCohorts());
   }, [dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (cohort.trim()) {
-      dispatch(addCohort({ id: Date.now(), name: cohort }));
+      dispatch(addNewCohort({ id: Date.now(), name: cohort }));
       setCohort('');
     }
   };
@@ -51,9 +37,10 @@ const CohortManagement = () => {
             placeholder="Enter cohort name"
             value={cohort}
             onChange={handleInputChange}
+            disabled={loading}
           />
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary" disabled={loading}>
           Add Cohort
         </button>
       </form>

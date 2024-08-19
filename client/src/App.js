@@ -13,10 +13,11 @@ import Profile from './components/Admin/Profile';
 import CohortManagement from './components/Admin/CohortManagement';
 import Footer from './components/Admin/Footer';
 import NavBar from './components/Admin/NavBar';
-import Projects from './components/Admin/Projects';
+import Projects from './components/Admin/AdminProjectManagement';
 import ForgotPassword from './components/forgotPassword/ForgotPassword';
 import ResetPassword from './components/forgotPassword/ResetPassword';
 import ProtectedRoute from './components/protectedRoute/ProtectedRoute';
+import SingleCohortView from './components/Admin/SingleCohortView';
 
 // Admin Layout Component
 const AdminLayout = ({ children }) => (
@@ -118,7 +119,14 @@ const App = () => {
               </AdminLayout>
             </ProtectedRoute>
           } />
-          <Route path='/projects' element={
+          <Route path='/single-cohort/:id' element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <SingleCohortView/>
+              </AdminLayout>
+            </ProtectedRoute>
+            }/>
+          <Route path='projects' element={
             <ProtectedRoute requireAdmin={true}>
               <AdminLayout>
                 <Projects />
