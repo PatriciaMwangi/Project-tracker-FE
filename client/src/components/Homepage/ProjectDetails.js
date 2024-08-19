@@ -16,7 +16,7 @@ const ProjectDetails = () => {
 
 
   useEffect(() => {
-    fetch(`https://project-tracker-be-bs7w.onrender.com/projects/${id}`)
+    fetch(`https://project-tracker-be-jwpt.onrender.com/projects/${id}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -28,7 +28,7 @@ const ProjectDetails = () => {
   }, [id]);
 
   const handleDelete = () => {
-    fetch(`https://project-tracker-be-bs7w.onrender.com/projects/${id}`, {
+    fetch(`https://project-tracker-be-jwpt.onrender.com/projects/${id}`, {
       method: 'DELETE'
     })
       .then(() => navigate('/projects'))
