@@ -20,7 +20,7 @@ const ProjectFormUpdate = () => {
 
   useEffect(() => {
     // Fetch the project data and populate the form fields when component mounts
-    fetch(`https://project-tracker-be-bs7w.onrender.com/projects/${id}`)
+    fetch(`https://project-tracker-be-jwpt.onrender.com/projects/${id}`)
       .then(response => response.json())
       .then(data => {
         setName(data.name);
