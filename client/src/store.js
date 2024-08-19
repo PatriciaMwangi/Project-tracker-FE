@@ -4,8 +4,8 @@ import authReducer from './features/auth/AuthSlice';
 import projectsReducer from './features/projects/ProjectsSlice';
 import cohortsReducer from './features/cohorts/CohortsSlice';
 import userReducer from './features/user/UserSlice';
-import forgotPasswordReducer from './features/forgotPassword/ForgotPasswordSlice';
-import resetPasswordReducer from './features/resetPassword/ResetPasswordSlice';
+import forgotPasswordReducer from './features/forgotPasswords/ForgotPasswordSlice';
+import resetPasswordReducer from './features/forgotPasswords/ResetPasswordSlice';
 
 const store = configureStore({
   reducer: {

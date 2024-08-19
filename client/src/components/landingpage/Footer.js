@@ -16,31 +16,31 @@ const Footer = () => {
                     <div className="col-md-2">
                         <h5 className="footer-heading">About</h5>
                         <ul className="footer-links">
-                            <li><a href="#">Our Story</a></li>
-                            <li><a href="#">Mission</a></li>
-                            <li><a href="#">Team</a></li>
+                            <li><a href="/our-story">Our Story</a></li>
+                            <li><a href="/mission">Mission</a></li>
+                            <li><a href="/team">Team</a></li>
                         </ul>
                     </div>
                     <div className="col-md-2">
                         <h5 className="footer-heading">Legal</h5>
                         <ul className="footer-links">
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms of Use</a></li>
+                            <li><a href="/privacy-policy">Privacy Policy</a></li>
+                            <li><a href="/terms-of-use">Terms of Use</a></li>
                         </ul>
                     </div>
                     <div className="col-md-2">
                         <h5 className="footer-heading">Get in Touch</h5>
                         <ul className="footer-links">
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Support</a></li>
+                            <li><a href="/contact">Contact</a></li>
+                            <li><a href="/support">Support</a></li>
                         </ul>
                     </div>
                     <div className="col-md-2">
                         <h5 className="footer-heading">Follow Us</h5>
                         <ul className="footer-social">
-                            <li><a href="#"><i className="fab fa-facebook"></i></a></li>
-                            <li><a href="#"><i className="fab fa-twitter"></i></a></li>
-                            <li><a href="#"><i className="fab fa-linkedin"></i></a></li>
+                            <li><a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-facebook"></i></a></li>
+                            <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-twitter"></i></a></li>
+                            <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-linkedin"></i></a></li>
                         </ul>
                     </div>
                 </div>
